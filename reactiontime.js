@@ -101,10 +101,16 @@ function handleChartProgress(userTime) {
     }
 }
 
+// Renderização do gráfico com escalas travadas para não sair da tela
 function renderChart() {
     const ctx = document.getElementById('reactionChart').getContext('2d');
 
+    // Identifica a maior pontuação para ajustar a escala limite sem quebrar o layout
+    const maxScore = Math.max(...scoreHistory);
+    const yAxisUpperLimit = Math.max(maxScore + 50, 400);
+
     if (myChart) {
+        myChart.options.scales.y.suggestedMax = yAxisUpperLimit;
         myChart.data.datasets[0].data = scoreHistory;
         myChart.update();
     } else {
@@ -127,24 +133,43 @@ function renderChart() {
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
+                plugins: { 
+                    legend: { display: false } 
+                },
+                layout: {
+                    padding: {
+                        top: 15,
+                        bottom: 10,
+                        left: 10,
+                        right: 10
+                    }
+                },
                 scales: {
-                    x: { ticks: { color: '#888' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } },
-                    y: { ticks: { color: '#888' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } }
+                    x: { 
+                        ticks: { color: '#888' }, 
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' } 
+                    },
+                    y: { 
+                        beginAtZero: false,
+                        suggestedMin: 100,
+                        suggestedMax: yAxisUpperLimit,
+                        ticks: { color: '#888' }, 
+                        grid: { color: 'rgba(255, 255, 255, 0.05)' } 
+                    }
                 }
             }
         });
     }
 }
 
-// Função de compartilhamento formatada para não quebrar no Discord
 function shareScore(score) {
     const btn = document.querySelector('.share-btn');
     const siteUrl = window.location.href;
 
-    // Texto sem quebras de linha brutas que incomodam o chat do Discord
-    const viralText = `🚨 CAN YOU BEAT ME?! 🚨 I scored an insane ${score} ms on the ML Reaction Time Test! Think you have god-tier reflexes? Prove it here: ${siteUrl}`;
+    // Mensagem formatada e limpa para o Discord
+    const discordFormattedText = `🚨 *CAN YOU BEAT ME?!* 🚨\nI scored **${score} ms** on the ML Reaction Time Test!\nTry to beat my score here: ${siteUrl}`;
 
+    // 1. Proteção se estiver rodando localmente sem servidor
     if (window.location.protocol === 'file:') {
         if (btn) {
             btn.textContent = "Open via Live Server to share! ⚠️";
@@ -153,24 +178,64 @@ function shareScore(score) {
         return;
     }
 
-    if (navigator.share) {
+    // 2. Tenta o compartilhaento nativo (se estiver em dispositivos móveis)
+    if (navigator.share && /Android|iPhone|iPad/i.test(navigator.userAgent)) {
         navigator.share({
             title: "ML Reaction Time Test",
-            text: viralText
+            text: discordFormattedText
         }).catch(() => {});
         return;
     }
 
-    try {
-        navigator.clipboard.writeText(viralText).then(() => {
-            if (btn) {
-                const originalText = btn.textContent;
-                btn.textContent = "Copied for Discord! 🔥";
-                setTimeout(() => { btn.textContent = originalText; }, 2000);
-            }
-        });
-    } catch (err) {
-        console.error("Failed to copy text:", err);
+    // 3. Função de fallback ultra-segura para cópia direta
+    function fallbackCopy(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        
+        // Coloca o elemento fora da tela e garante o foco
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        textArea.style.top = "-999999px";
+        document.body.appendChild(textArea);
+        
+        textArea.focus();
+        textArea.select();
+
+        let successful = false;
+        try {
+            successful = document.execCommand('copy');
+        } catch (err) {
+            console.error('Fallback copy failed:', err);
+        }
+
+        document.body.removeChild(textArea);
+        return successful;
+    }
+
+    // Tenta primeiro a Clipboard API moderna; se falhar, usa o Fallback na hora
+    if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(discordFormattedText)
+            .then(() => showSuccessFeedback(btn))
+            .catch(() => {
+                if (fallbackCopy(discordFormattedText)) {
+                    showSuccessFeedback(btn);
+                }
+            });
+    } else {
+        if (fallbackCopy(discordFormattedText)) {
+            showSuccessFeedback(btn);
+        }
+    }
+}
+
+// Função auxiliar para mudar o texto do botão temporariamente
+function showSuccessFeedback(btnElement) {
+    if (btnElement) {
+        const originalText = btnElement.textContent;
+        btnElement.textContent = "Copied to clipboard! 🔥";
+        setTimeout(() => {
+            btnElement.textContent = originalText;
+        }, 2000);
     }
 }
 
