@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML Reaction Time Test</title>
+    <!-- Chart.js CDN para renderizar o gráfico -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="reactiontime.css">
+</head>
+<body class="fade-in">
+
+    <!-- Top Header Banner -->
+    <header class="top-banner">
+        <div class="banner-brand">
+            <img src="Images/MoonLabIcon.png" alt="Moon's Lab Logo" class="logo-img">
+            <h1 class="banner-title">ML Reaction Time Test</h1>
+        </div>
+    </header>
+
+    <!-- Main Game Section -->
+    <main>
+        <!-- Wide Responsive Button -->
+        <div id="game-button" class="state-start">
+            <span id="button-text">Click to Start</span>
+        </div>
+        <p id="message">Test your visual reflexes!</p>
+
+        <!-- Benchmark & Stats Section -->
+        <section class="benchmark-section">
+            
+            <!-- Result Display -->
+            <div id="comparison-result" class="comparison-result hidden"></div>
+
+            <!-- Grid com Tabela na Esquerda e Gráfico na Direita -->
+            <div class="grid-container">
+                <!-- Dentro do seu reactiontime.html, atualizaremos a div do resultado -->
+<div id="comparison-result" class="comparison-result hidden">
+    <!-- O texto e o botão serão inseridos aqui pelo JavaScript -->
+</div>
+                <!-- Coluna Esquerda: Benchmarks -->
+                <div class="grid-col">
+                    <h2>Reaction Time Benchmarks</h2>
+                    <p class="benchmark-info">
+                        The average human reaction time is roughly <strong>250 ms</strong>.
+                    </p>
+
+                    <div class="stats-card">
+                        <h3>Performance Tiers</h3>
+                        <ul class="tier-list">
+                            <li><span class="tier-label">&lt; 180 ms:</span> <span class="tier-value">Esports Pro</span></li>
+                            <li><span class="tier-label">180 - 230 ms:</span> <span class="tier-value">Above Average</span></li>
+                            <li><span class="tier-label">230 - 270 ms:</span> <span class="tier-value">Average</span></li>
+                            <li><span class="tier-label">&gt; 270 ms:</span> <span class="tier-value">Below Average</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Coluna Direita: Gráfico & Progresso -->
+<!-- Coluna Direita: Gráfico & Progresso -->
+<div class="grid-col chart-col">
+    <h2>Performance Graph</h2>
+    
+    <!-- Mensagem do contador de tentativas -->
+    <div id="chart-placeholder" class="chart-placeholder">
+        <p id="chart-status-text">Complete <strong>5 tries</strong> to unlock your performance chart & 5-try average!</p>
+        <div class="progress-bar-bg">
+            <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+        </div>
+    </div>
+
+    <!-- Wrapper do Gráfico com Placar de Média e Melhor Tempo -->
+    <div id="chart-wrapper" class="chart-wrapper hidden">
+        <div class="stats-badges-container">
+            <div id="best-score-badge" class="stats-badge best-badge">Your Best Score: -- ms</div>
+            <div id="average-badge" class="stats-badge avg-badge">5-Try Avg: -- ms</div>
+        </div>
+        <canvas id="reactionChart"></canvas>
+    </div>
+</div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>Moon's Lab @2026 — Reaction time test. All rights reserved.</p>
+    </footer>
+
+    <script src="reactiontime.js"></script>
+</body>
+</html>

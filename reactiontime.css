@@ -1,0 +1,383 @@
+/* Reset and Box Sizing */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Page entrance animation */
+@keyframes fadeInPage {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeInPage 0.8s ease-out forwards;
+}
+
+/* Base Body Styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #050505; /* Deep black */
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* --- HEADER / BANNER --- */
+.top-banner {
+    width: 100%;
+    padding: 15px 30px;
+    background-color: #0a0a0a;
+    border-bottom: 1px solid rgba(0, 243, 255, 0.25);
+    display: flex;
+    align-items: center;
+}
+
+.banner-brand {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo-img {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+}
+
+.banner-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #00f3ff; /* Neon Blue */
+    text-shadow: 0 0 12px rgba(0, 243, 255, 0.4);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+/* --- MAIN CONTAINER --- */
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 15px;
+    width: 100%;
+}
+
+/* --- WIDE & DYNAMIC BUTTON --- */
+#game-button {
+    width: 90%;
+    max-width: 1200px;
+    height: 320px; /* Aumentado para dar mais presença ao botão */
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease, transform 0.1s ease;
+}
+
+/* Button States */
+.state-start {
+    background-color: #080808;
+    border: 2px solid #00f3ff;
+    color: #00f3ff;
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.2), inset 0 0 15px rgba(0, 243, 255, 0.05);
+}
+.state-start:hover {
+    box-shadow: 0 0 35px rgba(0, 243, 255, 0.45), inset 0 0 25px rgba(0, 243, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.state-waiting {
+    background-color: #ff2a2a;
+    border: 2px solid #ff2a2a;
+    color: #ffffff;
+    box-shadow: 0 0 40px rgba(255, 42, 42, 0.5);
+}
+
+.state-ready {
+    background-color: #39ff14;
+    border: 2px solid #39ff14;
+    color: #000000;
+    box-shadow: 0 0 45px rgba(57, 255, 20, 0.6);
+}
+
+/* Status Message */
+#message {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #aaaaaa;
+    min-height: 30px;
+    text-align: center;
+}
+
+/* --- BENCHMARK SECTION & GRID --- */
+/* Botão de Compartilhar */
+.share-btn {
+    margin-top: 15px;
+    background-color: transparent;
+    border: 1px solid #00f3ff;
+    color: #00f3ff;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.share-btn:hover {
+    background-color: #00f3ff;
+    color: #000000;
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.5);
+}
+
+.benchmark-section {
+    width: 90%;
+    max-width: 1200px;
+    margin-top: 40px;
+    background-color: #0b0d12;
+    border: 1px solid rgba(0, 243, 255, 0.3);
+    border-radius: 16px;
+    padding: 35px 30px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* Container de Badges acima do gráfico */
+.stats-badges-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.stats-badge {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Badge de Melhor Tempo (Verde Neon) */
+.best-badge {
+    background-color: rgba(57, 255, 20, 0.1);
+    border: 1px solid #39ff14;
+    color: #39ff14;
+    box-shadow: 0 0 10px rgba(57, 255, 20, 0.2);
+}
+
+/* Badge de Média (Azul Neon) */
+.avg-badge {
+    background-color: rgba(0, 243, 255, 0.1);
+    border: 1px solid #00f3ff;
+    color: #00f3ff;
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+@media (max-width: 500px) {
+    .stats-badges-container {
+        flex-direction: column;
+    }
+}
+
+.grid-col {
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- CHART COLUMN & PLACEHOLDER --- */
+.chart-col {
+    background-color: #06070a;
+    border: 1px solid rgba(0, 243, 255, 0.15);
+    border-radius: 12px;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+.chart-placeholder {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 30px 15px;
+}
+
+.chart-placeholder p {
+    font-size: 16px;
+    color: #aaaaaa;
+    margin-bottom: 20px;
+}
+
+/* Barra de Progresso */
+.progress-bar-bg {
+    width: 80%;
+    height: 10px;
+    background-color: #151821;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(0, 243, 255, 0.2);
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background-color: #00f3ff;
+    box-shadow: 0 0 10px #00f3ff;
+    transition: width 0.3s ease;
+}
+
+/* Wrapper do Gráfico */
+.chart-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    margin-top: 10px;
+}
+
+.average-badge {
+    text-align: center;
+    background-color: rgba(0, 243, 255, 0.1);
+    border: 1px solid #00f3ff;
+    color: #00f3ff;
+    font-weight: bold;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px rgba(0, 243, 255, 0.4);
+}
+
+.benchmark-section h2 {
+    color: #00f3ff;
+    font-size: 24px;
+    margin-bottom: 12px;
+    text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+}
+
+.benchmark-info {
+    color: #cccccc;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.stats-card {
+    background-color: #06070a;
+    border-left: 4px solid #00f3ff;
+    padding: 25px; /* Card com mais altura */
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.stats-card h3 {
+    font-size: 18px;
+    color: #00f3ff;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tier-list {
+    list-style: none;
+}
+
+.tier-list li {
+    padding: 14px 10px; /* Linhas mais espaçadas para aumentar a altura */
+    font-size: 15px;
+    border-bottom: 1px solid #151821;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tier-list li:last-child {
+    border-bottom: none;
+}
+
+.tier-label {
+    font-weight: bold;
+    color: #00f3ff;
+}
+
+.tier-value {
+    color: #dddddd;
+}
+
+/* --- RESULT DISPLAY (TOP & GIANT SCORE) --- */
+.comparison-result {
+    padding: 25px;
+    background-color: rgba(0, 243, 255, 0.05);
+    border: 2px solid #00f3ff;
+    border-radius: 12px;
+    color: #00f3ff;
+    font-size: 18px;
+    line-height: 1.5;
+    font-weight: 600;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(0, 243, 255, 0.25);
+    margin-bottom: 30px; /* Separação para a tabela abaixo */
+}
+
+/* O texto do tempo do usuário em tamanho gigante */
+.big-score {
+    font-size: 48px;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 0 20px #00f3ff, 0 0 10px #00f3ff;
+    display: block;
+    margin: 10px 0 15px 0;
+    letter-spacing: 1px;
+}
+
+.percent-info {
+    font-size: 20px;
+    color: #00f3ff;
+    margin-bottom: 8px;
+}
+
+.evaluation-text {
+    font-style: italic;
+    color: #dddddd;
+    font-size: 16px;
+}
+.hidden {
+    display: none;
+}
+
+/* --- FOOTER --- */
+footer {
+    padding: 20px;
+    text-align: center;
+    background-color: #0a0a0a;
+    border-top: 1px solid rgba(0, 243, 255, 0.15);
+    color: #666666;
+    font-size: 13px;
+}
